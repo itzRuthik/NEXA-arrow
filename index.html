@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="NEXA ARROWS - Minimalist mobile arrow-path logic puzzle game. Think. Tap. Escape.">
+  <title>NEXA ARROWS - Think. Tap. Escape.</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    
+    <!-- ==================== HOME SCREEN ==================== -->
+    <section id="screen-home" class="screen active">
+      <div class="home-bg-arrows" aria-hidden="true"></div>
+
+      <header class="home-header">
+        <div class="brand-badge">LOGIC PUZZLE</div>
+        <h1 class="brand-title">NEXA ARROWS</h1>
+        <p class="brand-tagline">THINK. TAP. ESCAPE.</p>
+      </header>
+
+      <main class="home-content">
+        <!-- Feature Cards Row -->
+        <div class="cards-row">
+          <!-- Daily Challenge Card (Blue) -->
+          <div class="feature-card card-daily" id="home-daily-card" role="button" tabindex="0">
+            <div class="card-glow"></div>
+            <div class="card-icon-wrap">
+              <svg viewBox="0 0 24 24" class="card-icon" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="3" ry="3"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="card-content">
+              <span class="card-label">Daily Challenge</span>
+              <span class="card-sub" id="home-daily-date">Today's Puzzle</span>
+            </div>
+            <div class="card-badge" id="home-daily-badge">Play</div>
+          </div>
+
+          <!-- Tournament Card (Orange) -->
+          <div class="feature-card card-tournament" id="home-tournament-card" role="button" tabindex="0">
+            <div class="card-glow"></div>
+            <div class="card-icon-wrap">
+              <svg viewBox="0 0 24 24" class="card-icon" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3"></path>
+                <path d="M18 9h3a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-3"></path>
+                <path d="M6 4h12v7a6 6 0 0 1-12 0V4z"></path>
+                <path d="M12 17v4"></path>
+                <path d="M8 21h8"></path>
+              </svg>
+            </div>
+            <div class="card-content">
+              <span class="card-label">Tournament</span>
+              <span class="card-sub" id="home-tournament-sub">Stage 1 of 5</span>
+            </div>
+            <div class="card-badge">Compete</div>
+          </div>
+        </div>
+
+        <!-- Center Hero / Puzzle Graphic -->
+        <div class="home-hero">
+          <div class="hero-puzzle-preview">
+            <svg viewBox="0 0 140 140" class="hero-svg">
+              <!-- Stylized preview arrow paths -->
+              <path d="M 25 115 L 25 35 L 75 35" stroke="#102A43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <polygon points="75,35 63,28 65,35 63,42" fill="#102A43"/>
+
+              <path d="M 115 115 L 115 65 L 55 65" stroke="#102A43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <polygon points="55,65 67,58 65,65 67,72" fill="#102A43"/>
+
+              <path d="M 45 115 L 95 115 L 95 85" stroke="#102A43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <polygon points="95,85 88,97 95,95 102,97" fill="#102A43"/>
+            </svg>
+          </div>
+
+          <!-- Large Blue New Game Button -->
+          <button id="btn-home-play" class="btn-play-hero" aria-label="Play game">
+            <span class="btn-play-text">PLAY</span>
+            <svg viewBox="0 0 24 24" class="btn-play-icon" fill="currentColor">
+              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+            </svg>
+          </button>
+          <div class="home-level-label" id="home-current-level-text">Level 1</div>
+        </div>
+      </main>
+    </section>
+
+    <!-- ==================== DAILY CHALLENGE SCREEN ==================== -->
+    <section id="screen-daily" class="screen">
+      <header class="sub-header">
+        <h2>Daily Challenge</h2>
+        <p id="daily-screen-date" class="header-subtitle">Sunday, October 11, 2026</p>
+      </header>
+      <main class="daily-content">
+        <div class="daily-hero-card">
+          <div class="daily-trophy-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3"></path>
+              <path d="M18 9h3a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-3"></path>
+              <path d="M6 4h12v7a6 6 0 0 1-12 0V4z"></path>
+              <path d="M12 17v4"></path>
+              <path d="M8 21h8"></path>
+            </svg>
+          </div>
+          <h3 id="daily-status-title">Today's Logic Challenge</h3>
+          <p id="daily-status-desc">A handcrafted daily maze to test your spatial reasoning. Consistent puzzle for everyone today.</p>
+          <div class="daily-badge-row">
+            <span class="badge-pill" id="daily-status-pill">Available</span>
+          </div>
+          <button id="btn-start-daily" class="btn-action-primary">Play Daily Challenge</button>
+        </div>
+
+        <!-- Monthly Calendar Streak Tracker -->
+        <div class="daily-streak-card">
+          <div class="streak-header">
+            <h4>This Month's Progress</h4>
+            <span class="streak-count" id="daily-streak-count">0 Completed</span>
+          </div>
+          <div class="streak-grid" id="daily-calendar-grid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <!-- ==================== PROFILE / ME SCREEN ==================== -->
+    <section id="screen-profile" class="screen">
+      <header class="sub-header">
+        <h2>Profile & Settings</h2>
+      </header>
+      <main class="profile-content">
+        <!-- User Summary Card -->
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">Arrow Master</h3>
+            <p class="profile-sub" id="profile-level-badge">Level 1 Unlocked</p>
+          </div>
+        </div>
+
+        <!-- Quick Stats Row -->
+        <div class="profile-stats-row">
+          <div class="stat-box">
+            <span class="stat-val" id="stat-levels-cleared">0</span>
+            <span class="stat-lbl">Cleared</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-val" id="stat-arrows-escaped">0</span>
+            <span class="stat-lbl">Arrows</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-val" id="stat-daily-streak">0</span>
+            <span class="stat-lbl">Dailies</span>
+          </div>
+        </div>
+
+        <!-- Menu Cards List -->
+        <div class="profile-menu-group">
+          <button class="profile-menu-item" id="btn-menu-awards">
+            <div class="menu-item-left">
+              <div class="menu-icon-wrap icon-awards">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <span class="menu-title">Awards & Trophies</span>
+            </div>
+            <svg viewBox="0 0 24 24" class="chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <button class="profile-menu-item" id="btn-menu-achievements">
+            <div class="menu-item-left">
+              <div class="menu-icon-wrap icon-achieve">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+              </div>
+              <span class="menu-title">Achievements</span>
+            </div>
+            <svg viewBox="0 0 24 24" class="chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <button class="profile-menu-item" id="btn-menu-settings">
+            <div class="menu-item-left">
+              <div class="menu-icon-wrap icon-settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              </div>
+              <span class="menu-title">Settings</span>
+            </div>
+            <svg viewBox="0 0 24 24" class="chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <button class="profile-menu-item" id="btn-menu-help">
+            <div class="menu-item-left">
+              <div class="menu-icon-wrap icon-help">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <span class="menu-title">Help & How to Play</span>
+            </div>
+            <svg viewBox="0 0 24 24" class="chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <button class="profile-menu-item" id="btn-menu-about">
+            <div class="menu-item-left">
+              <div class="menu-icon-wrap icon-about">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </div>
+              <span class="menu-title">About Game</span>
+            </div>
+            <svg viewBox="0 0 24 24" class="chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <button class="profile-menu-item" id="btn-menu-privacy">
+            <div class="menu-item-left">
+              <div class="menu-icon-wrap icon-privacy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <span class="menu-title">Privacy Rights & Preferences</span>
+            </div>
+            <svg viewBox="0 0 24 24" class="chevron" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <button class="profile-menu-item" id="btn-menu-remove-ads">
+            <div class="menu-item-left">
+              <div class="menu-icon-wrap icon-noads">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+              </div>
+              <span class="menu-title">Remove Ads</span>
+            </div>
+            <span class="menu-tag-free">100% Ad-Free</span>
+          </button>
+        </div>
+      </main>
+    </section>
+
+    <!-- ==================== GAME SCREEN ==================== -->
+    <section id="screen-game" class="screen">
+      <!-- TOP BAR -->
+      <header class="game-top-bar">
+        <button id="btn-game-back" class="icon-btn-round" aria-label="Back to home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="game-level-header">
+          <h2 id="game-level-title">Level 1</h2>
+          <span id="game-mode-subtitle" class="game-mode-tag">CAMPAIGN</span>
+        </div>
+        <button id="btn-game-settings" class="icon-btn-round" aria-label="Game Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </header>
+
+      <!-- STATUS ROW: Remaining Arrows, Hearts, Difficulty -->
+      <div class="game-status-row">
+        <!-- Arrow counter -->
+        <div class="status-item status-arrows" title="Remaining arrows">
+          <svg viewBox="0 0 24 24" class="status-arrow-icon" fill="currentColor">
+            <path d="M12 2L4 10h5v10h6V10h5L12 2z" transform="rotate(45 12 12)"/>
+          </svg>
+          <span id="game-arrow-count">0</span>
+        </div>
+
+        <!-- 3 Hearts -->
+        <div class="status-item status-hearts" id="game-hearts-container" title="Lives">
+          <span class="heart active" data-index="0">❤️</span>
+          <span class="heart active" data-index="1">❤️</span>
+          <span class="heart active" data-index="2">❤️</span>
+        </div>
+
+        <!-- Difficulty Indicator -->
+        <div class="status-item status-diff">
+          <span id="game-diff-badge" class="diff-badge badge-easy">EASY</span>
+        </div>
+      </div>
+
+      <!-- MAIN PUZZLE BOARD -->
+      <main class="game-board-area">
+        <div class="puzzle-board-card" id="puzzle-board-card">
+          <!-- Subtle dot grid background inside board -->
+          <div class="board-grid-pattern"></div>
+          
+          <!-- Responsive SVG for Arrows -->
+          <svg id="puzzle-svg" class="puzzle-svg" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <!-- Arrowhead Marker (or inline polygons) -->
+              <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#06B6D4" flood-opacity="0.9"/>
+              </filter>
+              <filter id="glow-error" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#EF4444" flood-opacity="0.9"/>
+              </filter>
+            </defs>
+            <g id="svg-arrows-layer"></g>
+          </svg>
+
+          <!-- Floating Escape Feedback Canvas/Overlay -->
+          <div id="board-toast" class="board-toast"></div>
+        </div>
+      </main>
+
+      <!-- BOTTOM POWER-UPS ROW: Circular Hint & Circular Undo -->
+      <footer class="game-bottom-bar">
+        <div class="powerup-btn-wrapper">
+          <button id="btn-powerup-hint" class="powerup-btn" aria-label="Hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+              <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5h6.18z"></path>
+            </svg>
+            <span class="powerup-badge" id="badge-hints-free">HINT</span>
+          </button>
+          <span class="powerup-label">Hint</span>
+        </div>
+
+        <div class="powerup-btn-wrapper">
+          <button id="btn-powerup-undo" class="powerup-btn" aria-label="Undo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span class="powerup-badge" id="badge-undo-count">UNDO</span>
+          </button>
+          <span class="powerup-label">Undo</span>
+        </div>
+      </footer>
+    </section>
+
+    <!-- ==================== BOTTOM NAVIGATION (Main, Daily, Me) ==================== -->
+    <nav id="bottom-nav" class="bottom-nav-bar">
+      <button class="nav-item active" data-target="screen-home" id="nav-btn-home">
+        <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span class="nav-label">Main</span>
+      </button>
+
+      <button class="nav-item" data-target="screen-daily" id="nav-btn-daily">
+        <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span class="nav-label">Daily</span>
+      </button>
+
+      <button class="nav-item" data-target="screen-profile" id="nav-btn-me">
+        <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span class="nav-label">Me</span>
+      </button>
+    </nav>
+
+    <!-- ==================== MODALS & OVERLAYS ==================== -->
+
+    <!-- 1. LEVEL COMPLETE MODAL -->
+    <div id="modal-level-complete" class="modal-backdrop">
+      <div class="modal-card modal-celebrate">
+        <div class="confetti-holder" id="confetti-container"></div>
+        <div class="modal-trophy-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <h2 class="modal-title">Level Cleared!</h2>
+        <p class="modal-sub" id="complete-level-subtitle">All arrows successfully escaped the maze.</p>
+        
+        <div class="complete-stats-row">
+          <div class="c-stat">
+            <span class="c-val" id="complete-arrows-count">0</span>
+            <span class="c-lbl">Arrows</span>
+          </div>
+          <div class="c-stat">
+            <span class="c-val" id="complete-hearts-left">❤️❤️❤️</span>
+            <span class="c-lbl">Lives Left</span>
+          </div>
+        </div>
+
+        <div class="modal-btn-stack">
+          <button id="btn-next-level" class="btn-primary-large">Next Level</button>
+          <button id="btn-complete-home" class="btn-secondary-flat">Return to Home</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. GAME OVER MODAL -->
+    <div id="modal-game-over" class="modal-backdrop">
+      <div class="modal-card modal-game-over-card">
+        <div class="modal-heart-broken">💔</div>
+        <h2 class="modal-title">Out of Hearts!</h2>
+        <p class="modal-sub">You hit blocked arrows. Take a moment to trace the clear paths before tapping!</p>
+        <div class="modal-btn-stack">
+          <button id="btn-retry-level" class="btn-primary-large">Retry Level</button>
+          <button id="btn-gameover-home" class="btn-secondary-flat">Return to Home</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SETTINGS MODAL -->
+    <div id="modal-settings" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>Settings</h3>
+          <button class="modal-close-btn" data-close="modal-settings">&times;</button>
+        </div>
+        <div class="settings-list">
+          <div class="settings-row">
+            <div class="setting-info">
+              <span class="setting-title">Sound Effects</span>
+              <span class="setting-sub">TIK taps, escape and victory audio</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="setting-sound-toggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="setting-info">
+              <span class="setting-title">Vibration Feedback</span>
+              <span class="setting-sub">Haptic taps on mobile devices</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="setting-vibration-toggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="settings-btn-group">
+            <button id="btn-settings-restart" class="btn-setting-action">Restart Current Level</button>
+            <button id="btn-settings-reset" class="btn-setting-danger">Reset Game Progress</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. HELP / HOW TO PLAY MODAL -->
+    <div id="modal-help" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>How to Play</h3>
+          <button class="modal-close-btn" data-close="modal-help">&times;</button>
+        </div>
+        <div class="help-body">
+          <div class="help-step">
+            <div class="step-num">1</div>
+            <div class="step-desc">
+              <strong>Inspect the Arrow Paths:</strong>
+              Arrows are continuous lines with 90° right-angle turns ending with a directional arrowhead.
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="step-num">2</div>
+            <div class="step-desc">
+              <strong>Tap to Escape:</strong>
+              When you tap an arrow, it shoots forward in the direction of its arrowhead and follows its path out of the board.
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="step-num">3</div>
+            <div class="step-desc">
+              <strong>Watch Out for Blockers:</strong>
+              If another arrow crosses its escape path, it cannot leave. Tapping a blocked arrow costs you 1 heart (❤️).
+            </div>
+          </div>
+          <div class="help-step">
+            <div class="step-num">4</div>
+            <div class="step-desc">
+              <strong>Use Power-Ups:</strong>
+              Stuck? Tap <strong>Hint</strong> to highlight a safe arrow. Made a mistake? Tap <strong>Undo</strong> to reverse your last move.
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary-large modal-bottom-btn" data-close="modal-help">Got it!</button>
+      </div>
+    </div>
+
+    <!-- 5. ABOUT MODAL -->
+    <div id="modal-about" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>About NEXA ARROWS</h3>
+          <button class="modal-close-btn" data-close="modal-about">&times;</button>
+        </div>
+        <div class="about-body">
+          <div class="about-brand">
+            <h2 class="about-title">NEXA ARROWS</h2>
+            <p class="about-tagline">THINK. TAP. ESCAPE.</p>
+            <span class="about-ver">Version 1.0.0</span>
+          </div>
+          <p class="about-desc">
+            A minimalist logic puzzle engineered with pure HTML5, CSS3, and Vanilla JavaScript.
+            Features guaranteed solvable procedural generation, smooth 60fps path animations, Web Audio digital click effects, and unlimited levels.
+          </p>
+          <div class="about-credits">
+            <span>Client-side & Offline Ready</span>
+            <span>Compatible with GitHub Pages & Mobile</span>
+          </div>
+        </div>
+        <button class="btn-primary-large modal-bottom-btn" data-close="modal-about">Close</button>
+      </div>
+    </div>
+
+    <!-- 6. PRIVACY MODAL -->
+    <div id="modal-privacy" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>Privacy & Data</h3>
+          <button class="modal-close-btn" data-close="modal-privacy">&times;</button>
+        </div>
+        <div class="privacy-body">
+          <p><strong>100% Offline & Private:</strong></p>
+          <p>NEXA ARROWS does not collect, store, transmit, or sell any personal data. All game state, unlocked levels, and preferences are stored strictly in your local browser storage (localStorage).</p>
+          <p>No analytics, no cookies, and no third-party network requests are made during gameplay.</p>
+        </div>
+        <button class="btn-primary-large modal-bottom-btn" data-close="modal-privacy">Understood</button>
+      </div>
+    </div>
+
+    <!-- 7. REMOVE ADS MODAL -->
+    <div id="modal-remove-ads" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>Ad-Free Gaming</h3>
+          <button class="modal-close-btn" data-close="modal-remove-ads">&times;</button>
+        </div>
+        <div class="ad-free-body">
+          <div class="ad-free-shield">🛡️</div>
+          <h4>Zero Advertisements</h4>
+          <p>This edition of NEXA ARROWS is completely ad-free! There are no banner ads, no video popups, and no pay-to-win microtransactions.</p>
+          <p>Enjoy an uninterrupted, pure puzzle-solving experience.</p>
+        </div>
+        <button class="btn-primary-large modal-bottom-btn" data-close="modal-remove-ads">Awesome!</button>
+      </div>
+    </div>
+
+    <!-- 8. ACHIEVEMENTS MODAL -->
+    <div id="modal-achievements" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>Achievements</h3>
+          <button class="modal-close-btn" data-close="modal-achievements">&times;</button>
+        </div>
+        <div class="achieve-list" id="achieve-items-container">
+          <!-- Populated by JS -->
+        </div>
+        <button class="btn-primary-large modal-bottom-btn" data-close="modal-achievements">Close</button>
+      </div>
+    </div>
+
+    <!-- 9. AWARDS / TROPHY ROOM MODAL -->
+    <div id="modal-awards" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>Awards & Trophies</h3>
+          <button class="modal-close-btn" data-close="modal-awards">&times;</button>
+        </div>
+        <div class="awards-grid" id="awards-items-container">
+          <!-- Populated by JS -->
+        </div>
+        <button class="btn-primary-large modal-bottom-btn" data-close="modal-awards">Close</button>
+      </div>
+    </div>
+
+    <!-- 10. TOURNAMENT ROADMAP MODAL -->
+    <div id="modal-tournament" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>Logic Master Tournament</h3>
+          <button class="modal-close-btn" data-close="modal-tournament">&times;</button>
+        </div>
+        <div class="tournament-info-body">
+          <p>Compete in 5 escalating logic stages to claim the Grand Master Cup!</p>
+          <div class="tournament-stages-list" id="tournament-stages-container">
+            <!-- Populated by JS -->
+          </div>
+          <button id="btn-start-tournament-stage" class="btn-primary-large">Play Current Stage</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. CONFIRM RESET MODAL -->
+    <div id="modal-confirm-reset" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header-row">
+          <h3>Reset Progress?</h3>
+          <button class="modal-close-btn" data-close="modal-confirm-reset">&times;</button>
+        </div>
+        <p class="modal-body-text">
+          Are you sure you want to reset your level progress, statistics, and unlocked achievements? This cannot be undone.
+        </p>
+        <div class="modal-btn-stack">
+          <button id="btn-confirm-reset-yes" class="btn-setting-danger">Yes, Reset Everything</button>
+          <button class="btn-secondary-flat" data-close="modal-confirm-reset">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#app -->
+
+  <script src="game.js"></script>
+</body>
+</html>

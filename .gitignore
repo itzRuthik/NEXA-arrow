@@ -1,0 +1,16 @@
+# Local Android/Gradle state
+.gradle/
+**/.gradle/
+local.properties
+**/build/
+
+# Android APKs and signing material (build artifacts are not committed)
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Editor / OS files
+.DS_Store
+.idea/
+*.iml

@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+def generatedWebAssets = project.layout.buildDirectory.dir('generated/web-assets')
+
+android {
+    namespace 'com.nexaarrows.game'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.nexaarrows.game'
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+
+    sourceSets {
+        main {
+            assets.srcDir(generatedWebAssets)
+        }
+    }
+}
+
+// Bundle the existing web game into the APK so it works fully offline.
+tasks.register('prepareWebAssets', Copy) {
+    from(rootProject.projectDir.parentFile) {
+        include 'index.html', 'style.css', 'game.js'
+    }
+    into(generatedWebAssets.map { it.dir('www') })
+}
+tasks.named('preBuild').configure {
+    dependsOn tasks.named('prepareWebAssets')
+}

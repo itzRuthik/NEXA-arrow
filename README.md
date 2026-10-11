@@ -97,6 +97,24 @@ npx serve .
 
 ---
 
+## 📦 Android APK
+
+This repository also includes a native Android WebView shell. It bundles the game files into the APK, so gameplay and saved progress work offline without a server or internet connection.
+
+### Download a ready-to-install APK
+
+Every push that changes the Android wrapper or game files builds a debug APK with GitHub Actions. Open the repository's **Actions → Build Android APK** run and download the `nexa-arrows-android-apk` artifact. The APK is signed with Android's debug key and can be installed directly on a device (you may need to allow installs from your browser or file manager).
+
+### Build locally
+
+Open the `android/` folder in Android Studio, or build with JDK 17 and Android SDK Platform 35:
+
+```bash
+./android/gradlew --no-daemon -p android assembleDebug
+```
+
+The installable APK is written to `android/app/build/outputs/apk/debug/app-debug.apk`.
+
 ## 📄 License
 
 MIT License. Created with ❤️ for puzzle lovers everywhere.

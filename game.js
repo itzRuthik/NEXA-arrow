@@ -1638,4 +1638,29 @@ class NexaArrowsGame {
    ============================================================================ */
 document.addEventListener('DOMContentLoaded', () => {
   window.nexaGame = new NexaArrowsGame();
+
+  /**
+   * Hardware back button hook for the Android (WebView) build.
+   * Returns true when the back press was consumed in-app, false to let
+   * the OS handle it (i.e. exit the app).
+   */
+  window.NexaAndroidBack = function () {
+    const game = window.nexaGame;
+    if (!game || !game.screens) return false;
+    try {
+      if (game.screens.game && game.screens.game.classList.contains('active')) {
+        game.switchScreen('home');
+        return true;
+      }
+      if (game.screens.daily && game.screens.daily.classList.contains('active')) {
+        game.switchScreen('home');
+        return true;
+      }
+      if (game.screens.profile && game.screens.profile.classList.contains('active')) {
+        game.switchScreen('home');
+        return true;
+      }
+    } catch (e) { /* fall through to exit */ }
+    return false;
+  };
 });

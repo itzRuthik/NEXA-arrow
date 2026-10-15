@@ -55,7 +55,7 @@ jobs:
       # Keep the latest installable APK at the repository root of this working
       # branch, so the deliverable is always one click away.
       - name: Publish APK on the working branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/arena/e737d674-nexa-arrow'
+        if: github.ref == 'refs/heads/arena/e737d674-nexa-arrow' && github.event_name != 'pull_request'
         run: |
           cp android/app/build/outputs/apk/release/app-release.apk NEXA-Arrows.apk
           git config user.name 'github-actions[bot]'

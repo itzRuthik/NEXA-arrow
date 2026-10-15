@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.nexa.arrows'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.nexa.arrows"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            // No minification needed — the game is plain JS in assets.
+            minifyEnabled false
+            // Signed with the debug key so the APK is directly installable.
+            // Replace with a dedicated release keystore before publishing to Play.
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs += ['src/main/assets']
+        }
+    }
+}
+
+// The web game at the repository root is the single source of truth.
+// Sync it into the APK assets before every build.
+tasks.register('syncWebAssets', Copy) {
+    description = 'Copies the shared HTML5 game (repo root) into the APK assets.'
+    group = 'build'
+    from(new File(rootDir, '../index.html'))
+    from(new File(rootDir, '../game.js'))
+    from(new File(rootDir, '../style.css'))
+    into(new File(projectDir, 'src/main/assets/www'))
+}
+
+preBuild.dependsOn 'syncWebAssets'

@@ -74,6 +74,37 @@ npx serve .
 
 ---
 
+## 🤖 Android App (APK)
+
+The game is packaged as a native Android app (a thin WebView shell around the same HTML5 game), so it installs and plays like any regular app.
+
+### Download & Install (no build needed)
+
+1. Grab the APK from the **[Releases page](../../releases)** (e.g. `NEXA-Arrows-v1.0.0-release.apk`).
+2. Copy it to your Android device and open it.
+3. If prompted, allow **"Install from unknown sources"** for your browser/file manager.
+4. Launch **NEXA Arrows** — progress is saved on-device.
+
+> The release APK is signed with a debug key so it is directly installable. If a future build is signed with a different key, uninstall the old app first.
+
+### Build the APK yourself
+
+Requirements: JDK 17 and the Android SDK (or just open `android/` in Android Studio).
+
+```bash
+cd android
+./gradlew assembleDebug assembleRelease
+# APKs land in:
+#   app/build/outputs/apk/debug/app-debug.apk
+#   app/build/outputs/apk/release/app-release.apk
+```
+
+The build automatically copies `index.html`, `game.js`, and `style.css` from the repo root into the APK assets — the web game stays the single source of truth.
+
+Every push and pull request is built automatically by the **[Build Android APK](.github/workflows/build-apk.yml)** GitHub Actions workflow, and pushing a `v*` tag attaches the APKs to a GitHub Release.
+
+---
+
 ## 🛠️ Technology Stack
 
 - **HTML5**: Semantic tags, accessible attributes, responsive viewport metadata.

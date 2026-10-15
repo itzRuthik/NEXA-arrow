@@ -1,0 +1,79 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main, 'arena/**']
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-34 build-tools;34.0.0'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Build debug + release APKs
+        working-directory: android
+        run: ./gradlew assembleDebug assembleRelease --stacktrace --no-daemon
+
+      - name: Collect APK artifacts
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/debug/app-debug.apk "dist/NEXA-Arrows-${GITHUB_REF_NAME//\//-}-debug.apk"
+          cp android/app/build/outputs/apk/release/app-release.apk "dist/NEXA-Arrows-${GITHUB_REF_NAME//\//-}-release.apk"
+          ls -lh dist/
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: NEXA-Arrows-APK
+          path: dist/*.apk
+          if-no-files-found: error
+
+      # Keep the latest installable APK at the repository root of this working
+      # branch, so the deliverable is always one click away.
+      - name: Publish APK on the working branch
+        if: github.ref == 'refs/heads/arena/e737d674-nexa-arrow' && github.event_name != 'pull_request'
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk NEXA-Arrows.apk
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f NEXA-Arrows.apk
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish NEXA ARROWS Android APK [skip ci]'
+            git push origin HEAD:arena/e737d674-nexa-arrow
+          fi
+
+      - name: Attach APKs to GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "NEXA Arrows $GITHUB_REF_NAME" \
+            --notes "NEXA Arrows Android APK — download and install on your device." \
+            || true
+          gh release upload "$GITHUB_REF_NAME" dist/*.apk --repo "$GITHUB_REPOSITORY" --clobber

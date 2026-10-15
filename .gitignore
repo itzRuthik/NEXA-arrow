@@ -1,0 +1,22 @@
+# Build outputs / packaging
+dist/
+*.aab
+
+# The CI-published installable APK (committed by the build workflow)
+NEXA-Arrows.apk
+
+# Android / Gradle
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/captures/
+android/app/src/main/assets/www/
+*.iml
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

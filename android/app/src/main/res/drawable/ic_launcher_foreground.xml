@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive launcher icon (API 26+): white arrow path on a blue background. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Foreground: a bold, rounded arrow pointing up-right (the game's core motif). -->
+    <group
+        android:scaleX="1.0"
+        android:scaleY="1.0"
+        android:translateX="0"
+        android:translateY="0">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M36,68 L68,36 L68,52 L76,52 L76,28 L52,28 L52,36 L68,36 L36,68 Z" />
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="8"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:fillColor="#00000000"
+            android:pathData="M34,70 L60,44" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M58,42 L74,42 L74,58 Z" />
+    </group>
+</vector>

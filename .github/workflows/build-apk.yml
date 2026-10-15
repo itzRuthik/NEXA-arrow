@@ -52,6 +52,20 @@ jobs:
           path: dist/*.apk
           if-no-files-found: error
 
+      # Keep the latest installable APK at the repository root of this working
+      # branch, so the deliverable is always one click away.
+      - name: Publish APK on the working branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/arena/e737d674-nexa-arrow'
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk NEXA-Arrows.apk
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f NEXA-Arrows.apk
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish NEXA ARROWS Android APK [skip ci]'
+            git push origin HEAD:arena/e737d674-nexa-arrow
+          fi
+
       - name: Attach APKs to GitHub Release (tags only)
         if: startsWith(github.ref, 'refs/tags/v')
         env:
